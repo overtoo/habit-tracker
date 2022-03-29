@@ -3,7 +3,7 @@ import Activity from "../../../models/Activity";
 
 dbConnect();
 
-export default async (req, res) => {
+const Um = async (req, res) => {
   const {
     query: { id },
     method,
@@ -58,3 +58,5 @@ export default async (req, res) => {
       break;
   }
 };
+
+export default Um;

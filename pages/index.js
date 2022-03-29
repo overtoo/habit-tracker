@@ -5,10 +5,10 @@ import { getSortedPostsData } from "../lib/activities";
 import Link from "next/link";
 import Date from "../components/date";
 import Calendar from "react-github-contribution-calendar";
-import LogActivity from "../components/logactivity";
+import Logactivity from "../components/logactivity";
 import { Button, Form, Loader } from "semantic-ui-react";
 
-export default function Home({ allPostsData }) {
+const Home = ({ allPostsData }) => {
   const values = {};
   const until = "2022-03-31";
   const types = ["code", "lift"];
@@ -65,13 +65,14 @@ export default function Home({ allPostsData }) {
         <Calendar values={values.code} until={until} />
         <h2 className={utilStyles.headingLg}>Lift</h2>
         <Calendar values={values.lift} until={until} />
-        <LogActivity /> <Button onClick={() => deleteAll()}> reset all </Button>
+        <Logactivity fakeProp={allPostsData} />
+        <Button onClick={() => deleteAll()}> reset all </Button>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Log</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, activity, quantity }) => (
-            <li className={utilStyles.listItem} key={id}>
+          {allPostsData.map(({ _id, date, activity, quantity }) => (
+            <li className={utilStyles.listItem} key={_id}>
               {/* <Link href={`/posts/${id}`}>
                 <a>{activity}</a>
               </Link>{" "} */}
@@ -86,7 +87,7 @@ export default function Home({ allPostsData }) {
       {JSON.stringify(values)}{" "}
     </Layout>
   );
-}
+};
 
 // Index.getInitialProps = async () => {
 //   const baseUrl = "http://localhost:3000/";
@@ -107,3 +108,5 @@ export async function getStaticProps() {
     },
   };
 }
+
+export default Home;

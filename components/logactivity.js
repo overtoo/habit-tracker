@@ -4,7 +4,7 @@ import fetch from "isomorphic-unfetch";
 import { Button, Form, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router"; //this is a nextjs router
 
-const LogActivity = () => {
+const Logactivity = ({ fakeProp }) => {
   const [form, setForm] = useState({
     activity: "",
     date: "",
@@ -186,4 +186,4 @@ const LogActivity = () => {
   );
 };
 
-export default LogActivity;
+export default Logactivity;
