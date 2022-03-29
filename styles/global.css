@@ -25,3 +25,22 @@ img {
   max-width: 100%;
   display: block;
 }
+
+.inline-form {
+  display: flex;
+  border: solid;
+  /* align-items: center; */
+}
+
+.inline-form .form-input {
+  /* display: flex; */
+  margin: 5px;
+  /* align-items: center; */
+}
+
+.inline-form .button {
+  /* display: flex; */
+  margin: 11px;
+  height: 50%;
+  /* align-items: center; */
+}

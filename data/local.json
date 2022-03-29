@@ -1,0 +1,18 @@
+{
+  "activities": [
+    {
+      "id": 12,
+      "activity": "code",
+      "type": "code",
+      "duration": "20",
+      "date": "2022-02-06"
+    },
+    {
+      "id": 10,
+      "activity": "lift",
+      "type": "lift",
+      "duration": "20",
+      "date": "2022-02-05"
+    }
+  ]
+}
