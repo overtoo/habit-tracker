@@ -155,7 +155,7 @@ const Home = ({ data }) => {
 //   };
 // }
 
-export async function getStaticProps(req, res) {
+export async function getServerSideProps(req, res) {
   dbConnect();
   const { method } = req;
   const activities = await Activity.find({});
