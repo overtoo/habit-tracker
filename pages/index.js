@@ -1,17 +1,78 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/activities";
+// import { getSortedPostsData } from "../lib/activities";
 import Link from "next/link";
 import Date from "../components/date";
 import Calendar from "react-github-contribution-calendar";
 import Logactivity from "../components/logactivity";
 import { Button, Form, Loader } from "semantic-ui-react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router"; //this is a nextjs router
+// import MyCalendar from "../components/calendar";
+import dbConnect from "../utils/dbConnect";
+import Activity from "../models/Activity";
 
-const Home = ({ allPostsData }) => {
+const Home = ({ data }) => {
+  console.log(data);
+
+  const hardCoded = [
+    {
+      _id: "62435a0c351eab2f66e7ad03",
+      activity: "code",
+      date: "2022-01-29",
+      quantity: 1,
+      __v: 0,
+    },
+    {
+      _id: "6243e11e137ccbed50900c1e",
+      activity: "code",
+      date: "2022-01-30",
+      quantity: 1,
+      __v: 0,
+    },
+    {
+      _id: "6243e11e137ccbed50900c20",
+      activity: "code",
+      date: "2022-01-29",
+      quantity: 1,
+      __v: 0,
+    },
+    {
+      _id: "6243e11f137ccbed50900c22",
+      activity: "code",
+      date: "2022-03-29",
+      quantity: 1,
+      __v: 0,
+    },
+    {
+      _id: "6243e11f137ccbed50900c24",
+      activity: "lift",
+      date: "2022-03-30",
+      quantity: 1,
+      __v: 0,
+    },
+  ];
+  // const router = useRouter();
+
+  // if (router.isFallback) return null;
+
+  const allPostsData = data;
+
+  // const [allPostsData, setAllPostsData] = useState(hardCoded);
+
+  // useEffect(() => {
+  //   if (allPostsDataLive) {
+  //     setAllPostsData(allPostsDataLive);
+  //   }
+  // }, [allPostsDataLive]);
+
+  // allPostsData = hardCoded;
   const values = {};
   const until = "2022-03-31";
   const types = ["code", "lift"];
+
+  console.log(JSON.stringify(allPostsData));
 
   const deleteAll = async () => {
     await Promise.all(
@@ -45,13 +106,6 @@ const Home = ({ allPostsData }) => {
       ))
   );
 
-  // var values2 = {
-  //   "2022-01-23": 1,
-  //   "2022-01-26": 2,
-  //   "2022-01-27": 3,
-  //   "2022-01-28": 4,
-  //   "2021-06-29": 4,
-  // };
   return (
     <Layout home>
       <Head>
@@ -89,22 +143,27 @@ const Home = ({ allPostsData }) => {
   );
 };
 
-// Index.getInitialProps = async () => {
+// export async function getStaticProps() {
 //   const baseUrl = "http://localhost:3000/";
-//   const res = await fetch(baseUrl + "/api/notes");
+//   const res = await fetch(baseUrl + "/api/activities");
 //   const { data } = await res.json();
 
-//   return { notes: data };
-// };
+//   return {
+//     props: {
+//       allPostsData: data,
+//     },
+//   };
+// }
 
-export async function getStaticProps() {
-  const baseUrl = "http://localhost:3000/";
-  const res = await fetch(baseUrl + "/api/activities");
-  const { data } = await res.json();
+export async function getStaticProps(req, res) {
+  dbConnect();
+  const { method } = req;
+  const activities = await Activity.find({});
+  console.log(activities);
 
   return {
     props: {
-      allPostsData: data,
+      data: JSON.parse(JSON.stringify(activities)),
     },
   };
 }
