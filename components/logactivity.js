@@ -29,7 +29,7 @@ const Logactivity = ({ fakeProp }) => {
     try {
       // const protocol = req.headers["x-forwarded-proto"] || "http";
       // const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
-      const baseUrl = "http://localhost:3000/";
+      const baseUrl = "https://habit-tracker-iota.vercel.app/";
 
       const res = await fetch(baseUrl + "api/activities", {
         method: "POST",

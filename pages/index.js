@@ -144,7 +144,7 @@ const Home = ({ data }) => {
 };
 
 // export async function getStaticProps() {
-//   const baseUrl = "http://localhost:3000/";
+//   const baseUrl = "https://habit-tracker-iota.vercel.app/";
 //   const res = await fetch(baseUrl + "/api/activities");
 //   const { data } = await res.json();
 
