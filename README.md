@@ -1,6 +1,6 @@
 # habit-tracker
 
-can be viewed at habit-tracker.vercel.app
+can be viewed at https://habit-tracker-iota.vercel.app/
 
 Todo:
 
