@@ -26,11 +26,10 @@ import Activity from "../models/Activity";
 //   }, [data]);
 // }
 
-function useAuthentication(data) {
+function RefreshData(data) {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const refreshData = () => {
+  const RefreshDataHuhIDontUnderstandWhatsCallingThis = () => {
     const router = useRouter();
-
     router.replace(router.asPath);
     setIsRefreshing(true);
   };
@@ -39,10 +38,23 @@ function useAuthentication(data) {
   }, [data]);
 }
 
+const DeleteAll = async (data) => {
+  await Promise.all(
+    data.map(async (item) => {
+      try {
+        const deleted = await fetch(`api/activities/${item._id}`, {
+          method: "Delete",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  );
+  // RefreshData(data);
+};
+
 const Home = ({ data }) => {
   console.log(data);
-
-  const refreshData = useAuthentication;
 
   const hardCoded = [
     {
@@ -93,20 +105,20 @@ const Home = ({ data }) => {
 
   console.log(JSON.stringify(allPostsData));
 
-  const deleteAll = async () => {
-    await Promise.all(
-      allPostsData.map(async (item) => {
-        try {
-          const deleted = await fetch(`api/activities/${item._id}`, {
-            method: "Delete",
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      })
-    );
-    // useAuthentication();
-  };
+  // const deleteAll = async () => {
+  //   await Promise.all(
+  //     allPostsData.map(async (item) => {
+  //       try {
+  //         const deleted = await fetch(`api/activities/${item._id}`, {
+  //           method: "Delete",
+  //         });
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     })
+  //   );
+  //   RefreshData(data);
+  // };
 
   types.map(
     (type) =>
@@ -139,8 +151,8 @@ const Home = ({ data }) => {
         <Calendar values={values.code} until={until} />
         <h2 className={utilStyles.headingLg}>Lift</h2>
         <Calendar values={values.lift} until={until} />
-        <Logactivity refreshData={refreshData(data)} />
-        <Button onClick={() => deleteAll()}> reset all </Button>
+        <Logactivity RefreshData={RefreshData(data)} />
+        <Button onClick={() => DeleteAll(data)}> reset all </Button>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Log</h2>
