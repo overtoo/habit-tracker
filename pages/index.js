@@ -13,8 +13,36 @@ import { useRouter } from "next/router"; //this is a nextjs router
 import dbConnect from "../utils/dbConnect";
 import Activity from "../models/Activity";
 
+// function useAuthentication(data) {
+//   const [isRefreshing, setIsRefreshing] = useState(false);
+//   const refreshData = () => {
+//     const router = useRouter();
+
+//     router.replace(router.asPath);
+//     setIsRefreshing(true);
+//   };
+//   useEffect(() => {
+//     setIsRefreshing(false);
+//   }, [data]);
+// }
+
+function useAuthentication(data) {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const refreshData = () => {
+    const router = useRouter();
+
+    router.replace(router.asPath);
+    setIsRefreshing(true);
+  };
+  useEffect(() => {
+    setIsRefreshing(false);
+  }, [data]);
+}
+
 const Home = ({ data }) => {
   console.log(data);
+
+  const refreshData = useAuthentication;
 
   const hardCoded = [
     {
@@ -53,21 +81,12 @@ const Home = ({ data }) => {
       __v: 0,
     },
   ];
-  // const router = useRouter();
 
+  // const router = useRouter();
   // if (router.isFallback) return null;
 
   const allPostsData = data;
 
-  // const [allPostsData, setAllPostsData] = useState(hardCoded);
-
-  // useEffect(() => {
-  //   if (allPostsDataLive) {
-  //     setAllPostsData(allPostsDataLive);
-  //   }
-  // }, [allPostsDataLive]);
-
-  // allPostsData = hardCoded;
   const values = {};
   const until = "2022-03-31";
   const types = ["code", "lift"];
@@ -86,6 +105,7 @@ const Home = ({ data }) => {
         }
       })
     );
+    // useAuthentication();
   };
 
   types.map(
@@ -119,7 +139,7 @@ const Home = ({ data }) => {
         <Calendar values={values.code} until={until} />
         <h2 className={utilStyles.headingLg}>Lift</h2>
         <Calendar values={values.lift} until={until} />
-        <Logactivity fakeProp={allPostsData} />
+        <Logactivity refreshData={refreshData(data)} />
         <Button onClick={() => deleteAll()}> reset all </Button>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
